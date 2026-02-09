@@ -10,6 +10,7 @@ O objetivo é demonstrar **boas práticas de engenharia de testes**, incluindo:
 * Logs claros de requisição e resposta
 * Execução via **Maven** e integração com **CI**
 * Versionamento profissional com **Git**
+* Documentação de **testes manuais com evidências**
 
 ---
 
@@ -42,6 +43,9 @@ O objetivo é demonstrar **boas práticas de engenharia de testes**, incluindo:
 ## 🧱 Estrutura do Projeto
 
 ```
+docs/                 → Documentação de testes manuais e estratégia
+reports/              → Relatórios de execução (JUnit / Newman)
+
 src/test/java
 ├─ base/        → BaseTest (configuração global)
 ├─ config/      → ApiConfig e SpecFactory (RequestSpecification)
@@ -55,9 +59,35 @@ src/test/resources
 
 ---
 
-## ✅ Cenários Automatizados
+# 🧪 Testes Manuais
 
-### 1) Listar posts — `GET /posts`
+Os **cenários manuais**, estratégia de teste, riscos e evidências estão documentados em:
+
+📄 **[Documento de Testes Manuais](docs/Testes_Manuais_JSONPlaceholder.pdf)**
+
+### Cobertura manual
+
+* CT-01 — Listar posts
+* CT-02 — Buscar post por ID válido
+* CT-03 — Buscar post inexistente
+* CT-04 — Listar usuários
+* CT-05 — Validar formato JSON
+* CT-06 — Tempo de resposta
+
+### Objetivo dos testes manuais
+
+Garantir:
+
+* Reprodutibilidade por outros testadores
+* Validação funcional básica da API
+* Verificação de estrutura de resposta
+* Identificação de riscos de ambiente mock
+
+---
+
+# ✅ Cenários Automatizados
+
+## 1) Listar posts — `GET /posts`
 
 **Validações**
 
@@ -72,7 +102,7 @@ src/test/resources
 
 ---
 
-### 2) Buscar post por ID — `GET /posts/{id}`
+## 2) Buscar post por ID — `GET /posts/{id}`
 
 **Cenário executado**
 
@@ -88,7 +118,7 @@ src/test/resources
 
 ---
 
-### 3) Validação de contrato — JSON Schema
+## 3) Validação de contrato — JSON Schema
 
 * Uso de **JSON Schema Validator (RestAssured)**
 * Arquivo: `schemas/post-schema.json`
@@ -102,7 +132,7 @@ src/test/resources
 
 ---
 
-### 4) Listar usuários — `GET /users`
+## 4) Listar usuários — `GET /users`
 
 **Validações**
 
@@ -117,7 +147,7 @@ src/test/resources
 
 ---
 
-## 🧾 Logs Visuais das Requisições
+# 🧾 Logs Visuais das Requisições
 
 O projeto possui um **filtro customizado** que melhora a leitura das execuções no console.
 
@@ -132,9 +162,9 @@ Facilita a **análise rápida de falhas** durante a execução dos testes.
 
 ---
 
-## ▶️ Como Executar
+# ▶️ Como Executar
 
-### Executar todos os testes (Maven)
+## Executar todos os testes (Maven)
 
 ```bash
 mvn test
@@ -142,7 +172,7 @@ mvn test
 
 ---
 
-## 🔌 Execução Alternativa — Postman + Newman (PowerShell)
+# 🔌 Execução Alternativa — Postman + Newman (PowerShell)
 
 A collection Postman contém cenários equivalentes:
 
@@ -157,8 +187,6 @@ A collection Postman contém cenários equivalentes:
 * Valor do `id`
 
 ### Gerar relatório JUnit XML
-
-> ✅ **Comando validado no Windows PowerShell**
 
 ```powershell
 newman run "postman\JSONPlaceholder_API.postman_collection.json" `
@@ -175,27 +203,21 @@ reports/newman/report.xml
 
 ### Observações importantes
 
-* Neste projeto, a execução estável ocorre utilizando **apenas o reporter `junit`**.
-* O uso de `-r cli,junit` pode falhar no **PowerShell** devido a erro de parsing do parâmetro.
-* O reporter `cli` já é padrão do Newman, portanto não é necessário informá-lo.
-
-### Criar pasta de relatório (se não existir)
-
-```powershell
-New-Item -ItemType Directory -Force -Path "reports\newman" | Out-Null
-```
+* Execução estável utilizando **apenas o reporter `junit`**
+* `cli` já é padrão do Newman
+* Compatível com **PowerShell**
 
 ---
 
-## 📊 Relatórios
+# 📊 Relatórios e Evidências
 
-* **JUnit XML** gerado em:
+* **Relatório JUnit (Newman)**
+  `reports/newman/report.xml`
 
-```
-reports/newman/report.xml
-```
+* **Documento de Testes Manuais**
+  `docs/Testes_Manuais_JSONPlaceholder.pdf`
 
-* Pode ser consumido por:
+* Compatível com:
 
   * GitHub Actions
   * GitLab CI
@@ -204,17 +226,18 @@ reports/newman/report.xml
 
 ---
 
-## 🧪 Boas Práticas Demonstradas
+# 🧪 Boas Práticas Demonstradas
 
 * Separação clara entre **configuração, modelos e testes**
 * Reutilização de **RequestSpecification**
 * Validação de **contrato de API**
 * Logs legíveis para **debug rápido**
+* Integração entre **testes manuais e automatizados**
 * Projeto pronto para **integração contínua**
 
 ---
 
-## 👨‍💻 Autor
+# 👨‍💻 Autor
 
 **Vitor Machado**
 QA Automation Engineer
