@@ -1,0 +1,113 @@
+{
+  "info": {
+    "_postman_id": "b166976e-687b-4909-8d73-c5ce43a3b1c1",
+    "name": "JSONPlaceholder_API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "52214530",
+    "_collection_link": "https://go.postman.co/collection/52214530-b166976e-687b-4909-8d73-c5ce43a3b1c1?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "/posts",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code deve ser 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Resposta deve ser uma lista com 100 posts\", function () {\r",
+              "    const jsonData = pm.response.json();\r",
+              "    pm.expect(jsonData.length).to.eql(100);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Primeiro post deve conter campos obrigatórios válidos\", function () {\r",
+              "    const post = pm.response.json()[0];\r",
+              "\r",
+              "    pm.expect(post).to.have.property(\"userId\");\r",
+              "    pm.expect(post).to.have.property(\"id\");\r",
+              "    pm.expect(post).to.have.property(\"title\");\r",
+              "    pm.expect(post).to.have.property(\"body\");\r",
+              "\r",
+              "    pm.expect(post.userId).to.be.a(\"number\");\r",
+              "    pm.expect(post.id).to.be.a(\"number\");\r",
+              "    pm.expect(post.title).to.be.a(\"string\");\r",
+              "    pm.expect(post.body).to.be.a(\"string\");\r",
+              "});\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/posts",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "posts"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/posts/{{postId}}",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code deve ser 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Campo id deve ser igual ao postId enviado\", function () {\r",
+              "    const jsonData = pm.response.json();\r",
+              "    const postId = parseInt(pm.environment.get(\"postId\"));\r",
+              "\r",
+              "    pm.expect(jsonData.id).to.eql(postId);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Campos obrigatórios devem existir e ter tipo correto\", function () {\r",
+              "    const post = pm.response.json();\r",
+              "\r",
+              "    pm.expect(post.userId).to.be.a(\"number\");\r",
+              "    pm.expect(post.id).to.be.a(\"number\");\r",
+              "    pm.expect(post.title).to.be.a(\"string\");\r",
+              "    pm.expect(post.body).to.be.a(\"string\");\r",
+              "});\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/posts/{{postId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "posts",
+            "{{postId}}"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
