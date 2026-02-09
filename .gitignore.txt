@@ -1,0 +1,30 @@
+# ========================
+# Maven
+# ========================
+target/
+*.log
+
+# ========================
+# IntelliJ IDEA
+# ========================
+.idea/
+*.iml
+out/
+
+# ========================
+# Sistema Operacional
+# ========================
+.DS_Store
+Thumbs.db
+
+# ========================
+# Arquivos temporários
+# ========================
+*.tmp
+*.swp
+
+# ========================
+# Relatórios de teste
+# ========================
+surefire-reports/
+failsafe-reports/
